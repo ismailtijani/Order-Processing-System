@@ -8,10 +8,27 @@ import { CalculatedOrderModule } from './modules/calculated-order/calculated-ord
 import { AddonModule } from './modules/addon/addon.module';
 import { BrandModule } from './modules/brand/brand.module';
 import { OrderTypeModule } from './modules/order-type/order-type.module';
+import knexConfig from './database/knexfile';
+import { Model } from 'objection';
+import { Knex } from 'knex';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), OrderModule, OrderLogModule, MealModule, CalculatedOrderModule, AddonModule, BrandModule, OrderTypeModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    OrderModule,
+    OrderLogModule,
+    MealModule,
+    CalculatedOrderModule,
+    AddonModule,
+    BrandModule,
+    OrderTypeModule,
+  ],
   controllers: [AppController],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {
+    const knex = Knex.default(knexConfig);
+    Model.knex(knex); // Bind Objection to Knex
+  }
+}
