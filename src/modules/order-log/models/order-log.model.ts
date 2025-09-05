@@ -1,3 +1,4 @@
+import { Model, RelationMappings } from 'objection';
 import { Order } from '../../order/models/order.model';
 import { BaseModel } from 'src/shared/base.model';
 
@@ -8,9 +9,9 @@ export class OrderLog extends BaseModel {
   time!: Date;
   description!: string;
 
-  static relationMappings = {
+  static relationMappings: RelationMappings = {
     order: {
-      relation: BaseModel.BelongsToOneRelation,
+      relation: Model.BelongsToOneRelation,
       modelClass: () => Order,
       join: {
         from: 'order_logs.order_id',

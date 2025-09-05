@@ -1,3 +1,4 @@
+import { Model, RelationMappings } from 'objection';
 import { Order } from 'src/modules/order/models/order.model';
 import { BaseModel } from 'src/shared/base.model';
 
@@ -6,9 +7,9 @@ export class OrderType extends BaseModel {
 
   name!: string;
 
-  static relationMappings = {
+  static relationMappings: RelationMappings = {
     orders: {
-      relation: BaseModel.HasManyRelation,
+      relation: Model.HasManyRelation,
       modelClass: () => Order,
       join: {
         from: 'order_types.id',

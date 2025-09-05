@@ -1,23 +1,26 @@
-import { ConfigService } from '@nestjs/config';
 import { Knex } from 'knex';
+import * as dotenv from 'dotenv';
+import * as path from 'path';
 
-const configService = new ConfigService();
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 const knexConfig: Knex.Config = {
   client: 'postgresql',
   connection: {
-    host: configService.getOrThrow('DB_HOST'),
-    port: parseInt(configService.getOrThrow('DB_PORT')),
-    user: configService.getOrThrow('DB_USER'),
-    password: configService.getOrThrow('DB_PASSWORD'),
-    database: configService.getOrThrow('DB_NAME'),
+    host: process.env.DB_HOST,
+    port: parseInt(process.env.DB_PORT || '5432'),
+    database: process.env.DB_NAME,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
     // ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
   },
+  pool: { min: 2, max: 20 },
   migrations: {
-    directory: './src/migrations',
+    tableName: 'migrations',
+    directory: '../migrations',
   },
   seeds: {
-    directory: './src/seeds',
+    directory: './seeds',
   },
 };
 

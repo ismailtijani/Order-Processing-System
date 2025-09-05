@@ -1,8 +1,9 @@
 import { BaseModel } from 'src/shared/base.model';
 import { Meal } from './meal/models/meal.model';
 import { CalculatedOrder } from './calculated-order/models/calculated-order.model';
+import { Model, RelationMappings } from 'objection';
 
-export class MealOrderModel extends BaseModel {
+export class MealOrder extends BaseModel {
   static tableName = 'meal_orders';
 
   calculated_order_id!: string;
@@ -12,9 +13,9 @@ export class MealOrderModel extends BaseModel {
   amount!: number;
   internal_profit?: number;
 
-  static relationMappings = {
+  static relationMappings: RelationMappings = {
     meal: {
-      relation: BaseModel.BelongsToOneRelation,
+      relation: Model.BelongsToOneRelation,
       modelClass: () => Meal,
       join: {
         from: 'meal_orders.meal_id',
@@ -22,7 +23,7 @@ export class MealOrderModel extends BaseModel {
       },
     },
     calculatedOrder: {
-      relation: BaseModel.BelongsToOneRelation,
+      relation: Model.BelongsToOneRelation,
       modelClass: () => CalculatedOrder,
       join: {
         from: 'meal_orders.calculated_order_id',

@@ -1,6 +1,7 @@
 import { Order } from '../../order/models/order.model';
-import { Meal } from '../../meal/models/meal.model';
 import { BaseModel } from 'src/shared/base.model';
+import { Model, RelationMappings } from 'objection';
+import { MealOrder } from 'src/modules/meal-order.model';
 
 export class CalculatedOrder extends BaseModel {
   static tableName = 'calculated_orders';
@@ -23,9 +24,9 @@ export class CalculatedOrder extends BaseModel {
     building_number: string;
   };
 
-  static relationMappings = {
+  static relationMappings: RelationMappings = {
     order: {
-      relation: BaseModel.HasOneRelation,
+      relation: Model.HasOneRelation,
       modelClass: () => Order,
       join: {
         from: 'calculated_orders.id',
@@ -33,11 +34,11 @@ export class CalculatedOrder extends BaseModel {
       },
     },
     mealOrders: {
-      relation: BaseModel.HasManyRelation,
-      modelClass: () => Meal,
+      relation: Model.HasManyRelation,
+      modelClass: () => MealOrder,
       join: {
         from: 'calculated_orders.id',
-        to: 'meals.calculated_order_id',
+        to: 'meal_orders.calculated_order_id',
       },
     },
   };

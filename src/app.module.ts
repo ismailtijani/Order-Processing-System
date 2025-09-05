@@ -1,4 +1,9 @@
-import { Module } from '@nestjs/common';
+import {
+  InternalServerErrorException,
+  Logger,
+  Module,
+  OnApplicationBootstrap,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { ConfigModule } from '@nestjs/config';
 import { OrderModule } from './modules/order/order.module';
@@ -8,9 +13,9 @@ import { CalculatedOrderModule } from './modules/calculated-order/calculated-ord
 import { AddonModule } from './modules/addon/addon.module';
 import { BrandModule } from './modules/brand/brand.module';
 import { OrderTypeModule } from './modules/order-type/order-type.module';
-import knexConfig from './database/knexfile';
 import { Model } from 'objection';
-import { Knex } from 'knex';
+import knex, { Knex } from 'knex';
+import knexConfig from './database/knexfile';
 
 @Module({
   imports: [
@@ -26,9 +31,30 @@ import { Knex } from 'knex';
   controllers: [AppController],
   providers: [],
 })
-export class AppModule {
+export class AppModule implements OnApplicationBootstrap {
+  private knexConnection: Knex;
+  private readonly logger = new Logger(AppModule.name);
+
   constructor() {
-    const knex = Knex.default(knexConfig);
-    Model.knex(knex); // Bind Objection to Knex
+    this.knexConnection = knex(knexConfig);
+    Model.knex(this.knexConnection);
+  }
+
+  async onApplicationBootstrap() {
+    await this.testConnection();
+  }
+
+  private async testConnection() {
+    try {
+      await this.knexConnection.raw('select 1+1 as result');
+      this.logger.log('✅ Database connected!');
+    } catch (err) {
+      this.logger.error('❌ Database connection failed', err);
+      // Destroy connection to free resources
+      await this.knexConnection.destroy();
+      throw new InternalServerErrorException(
+        'Cannot start app without database connection',
+      );
+    }
   }
 }

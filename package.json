@@ -17,7 +17,18 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "migration:make": "knex migrate:make --knexfile src/database/knexfile.ts",
+    "migration:run": "knex migrate:latest --knexfile src/database/knexfile.ts",
+    "migration:rollback": "knex migrate:rollback --knexfile src/database/knexfile.ts",
+    "migration:rollback:all": "knex migrate:rollback --all --knexfile src/database/knexfile.ts",
+    "migration:status": "knex migrate:status --knexfile src/database/knexfile.ts",
+    "migration:up": "knex migrate:up --knexfile src/database/knexfile.ts",
+    "seed:make": "knex seed:make",
+    "seed:run": "knex seed:run",
+    "db:setup": "npm run migration:latest && npm run seed:run",
+    "db:reset": "npm run migration:rollback:all && npm run migration:latest && npm run seed:run",
+    "db:fresh": "npm run migration:rollback:all && npm run migration:latest"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",

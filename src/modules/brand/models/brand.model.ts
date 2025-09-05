@@ -1,3 +1,4 @@
+import { Model, RelationMappings } from 'objection';
 import { Meal } from 'src/modules/meal/models/meal.model';
 import { BaseModel } from 'src/shared/base.model';
 
@@ -6,9 +7,9 @@ export class Brand extends BaseModel {
 
   name!: string;
 
-  static relationMappings = {
+  static relationMappings: RelationMappings = {
     meals: {
-      relation: BaseModel.HasManyRelation,
+      relation: Model.HasManyRelation,
       modelClass: () => Meal,
       join: {
         from: 'brands.id',

@@ -2,6 +2,7 @@ import { OrderLog } from '../../order-log/models/order-log.model';
 import { CalculatedOrder } from '../../calculated-order/models/calculated-order.model';
 import { OrderType } from '../../order-type/models/order-type.model';
 import { BaseModel } from 'src/shared/base.model';
+import { Model, RelationMappings } from 'objection';
 
 export class Order extends BaseModel {
   static tableName = 'orders';
@@ -57,9 +58,9 @@ export class Order extends BaseModel {
     total_amount: number;
   }>;
 
-  static relationMappings = {
+  static relationMappings: RelationMappings = {
     logs: {
-      relation: BaseModel.HasManyRelation,
+      relation: Model.HasManyRelation,
       modelClass: () => OrderLog,
       join: {
         from: 'orders.id',
@@ -67,7 +68,7 @@ export class Order extends BaseModel {
       },
     },
     calculatedOrder: {
-      relation: BaseModel.BelongsToOneRelation,
+      relation: Model.BelongsToOneRelation,
       modelClass: () => CalculatedOrder,
       join: {
         from: 'orders.calculated_order_id',
@@ -75,7 +76,7 @@ export class Order extends BaseModel {
       },
     },
     orderType: {
-      relation: BaseModel.BelongsToOneRelation,
+      relation: Model.BelongsToOneRelation,
       modelClass: () => OrderType,
       join: {
         from: 'orders.order_type_id',
