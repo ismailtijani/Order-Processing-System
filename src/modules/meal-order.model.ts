@@ -2,6 +2,7 @@ import { BaseModel } from 'src/shared/base.model';
 import { Meal } from './meal/models/meal.model';
 import { CalculatedOrder } from './calculated-order/models/calculated-order.model';
 import { Model, RelationMappings } from 'objection';
+import { MealOrderAddon } from './meal-order-addon.model';
 
 export class MealOrder extends BaseModel {
   static tableName = 'meal_orders';
@@ -29,6 +30,11 @@ export class MealOrder extends BaseModel {
         from: 'meal_orders.calculated_order_id',
         to: 'calculated_orders.id',
       },
+    },
+    addons: {
+      relation: Model.HasManyRelation,
+      modelClass: () => MealOrderAddon,
+      join: { from: 'meal_orders.id', to: 'meal_order_addons.meal_order_id' },
     },
   };
 }

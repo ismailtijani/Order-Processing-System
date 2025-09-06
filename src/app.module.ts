@@ -15,6 +15,7 @@ import { BrandModule } from './modules/brand/brand.module';
 import { OrderTypeModule } from './modules/order-type/order-type.module';
 import { Model } from 'objection';
 import knex, { Knex } from 'knex';
+import { UserModule } from './modules/user/user.module';
 import knexConfig from './database/knexfile';
 
 @Module({
@@ -27,6 +28,7 @@ import knexConfig from './database/knexfile';
     AddonModule,
     BrandModule,
     OrderTypeModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [],

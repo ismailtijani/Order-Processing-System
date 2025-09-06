@@ -13,4 +13,12 @@ export class BaseModel extends Model {
   $beforeUpdate() {
     this.updated_at = new Date();
   }
+
+  // static get modifiers() {
+  //   return {
+  //     notDeleted(query) {
+  //       query.where('is_deleted', false);
+  //     },
+  //   };
+  // }
 }

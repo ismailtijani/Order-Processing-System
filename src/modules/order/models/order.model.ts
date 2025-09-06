@@ -3,6 +3,7 @@ import { CalculatedOrder } from '../../calculated-order/models/calculated-order.
 import { OrderType } from '../../order-type/models/order-type.model';
 import { BaseModel } from 'src/shared/base.model';
 import { Model, RelationMappings } from 'objection';
+import { User } from 'src/modules/user/models/user.model';
 
 export class Order extends BaseModel {
   static tableName = 'orders';
@@ -81,6 +82,22 @@ export class Order extends BaseModel {
       join: {
         from: 'orders.order_type_id',
         to: 'order_types.id',
+      },
+    },
+    rider: {
+      relation: Model.BelongsToOneRelation,
+      modelClass: () => User,
+      join: {
+        from: 'orders.rider_id',
+        to: 'users.id',
+      },
+    },
+    user: {
+      relation: Model.BelongsToOneRelation,
+      modelClass: () => User,
+      join: {
+        from: 'orders.user_id',
+        to: 'users.id',
       },
     },
   };

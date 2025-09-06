@@ -1,37 +1,41 @@
+import { Model } from 'objection';
 import { Meal } from '../../meal/models/meal.model';
 import { BaseModel } from 'src/shared/base.model';
+import { AddonCategory } from 'src/modules/addon-category.model';
 
 export class Addon extends BaseModel {
   static tableName = 'addons';
 
   meal_id!: string;
-  amount!: number;
-  quantity!: number;
+  addon_meal_id!: string;
+  addon_category_id!: string;
+  addon_amount!: number;
+
+  default_quantity?: number;
   position?: number;
   is_combo!: boolean;
-  meal_addon_id!: string;
-  meal_addon_category_id!: string;
   internal_profit?: number;
-  min_selection_no?: string;
-  images?: Record<string, any>;
+  min_selection?: number;
+  images?: string[];
   posist_data?: Record<string, any>;
-  meal_data?: {
-    id: string;
-    name: string;
-    active: boolean;
-    amount?: string;
-    brand_id?: string;
-    item_type?: string;
-    new?: boolean;
-  };
 
   static relationMappings = {
-    meal: {
-      relation: BaseModel.BelongsToOneRelation,
+    mainMeal: {
+      relation: Model.BelongsToOneRelation,
       modelClass: () => Meal,
+      join: { from: 'addons.meal_id', to: 'meals.id' },
+    },
+    addonMeal: {
+      relation: Model.BelongsToOneRelation,
+      modelClass: () => Meal,
+      join: { from: 'addons.addon_meal_id', to: 'meals.id' },
+    },
+    category: {
+      relation: Model.BelongsToOneRelation,
+      modelClass: () => AddonCategory,
       join: {
-        from: 'addons.meal_id',
-        to: 'meals.id',
+        from: 'addons.addon_category_id',
+        to: 'addon_categories.id',
       },
     },
   };
