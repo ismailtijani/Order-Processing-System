@@ -24,6 +24,7 @@
     "migration:rollback:all": "knex migrate:rollback --all --knexfile src/database/knexfile.ts",
     "migration:status": "knex migrate:status --knexfile src/database/knexfile.ts",
     "migration:up": "knex migrate:up --knexfile src/database/knexfile.ts",
+    "migration:up:file": "knex migrate:up --knexfile src/database/knexfile.ts",
     "seed:make": "knex seed:make",
     "seed:run": "knex seed:run",
     "db:setup": "npm run migration:latest && npm run seed:run",
