@@ -3,6 +3,8 @@ import { SetMetadata } from '@nestjs/common';
 export const Characters =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
+export const SENSITIVE_FIELDS = ['password', 'token', 'authorization'] as const;
+
 export const PAGINATION_CONSTANTS = {
   DEFAULT_PAGE: 1,
   DEFAULT_LIMIT: 10,

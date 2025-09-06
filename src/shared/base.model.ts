@@ -14,11 +14,27 @@ export class BaseModel extends Model {
     this.updated_at = new Date();
   }
 
-  // static get modifiers() {
-  //   return {
-  //     notDeleted(query) {
-  //       query.where('is_deleted', false);
-  //     },
-  //   };
-  // }
+  static get idColumn() {
+    return 'id';
+  }
+
+  static get jsonSchema() {
+    return {
+      type: 'object',
+      required: [],
+      properties: {
+        id: { type: 'string', format: 'uuid' },
+        created_at: { type: 'string', format: 'date-time' },
+        updated_at: { type: 'string', format: 'date-time' },
+      },
+    };
+
+    // static get modifiers() {
+    //   return {
+    //     notDeleted(query) {
+    //       query.where('is_deleted', false);
+    //     },
+    //   };
+    // }
+  }
 }
