@@ -1,6 +1,6 @@
 import { Brand } from '../../brand/models/brand.model';
 import { Addon } from '../../addon/models/addon.model';
-import { BaseModel } from 'src/shared/base.model';
+import { BaseModel } from 'src/shared/models/base.model';
 import { Model, RelationMappings } from 'objection';
 import { MealOrder } from 'src/modules/meal-order.model';
 import { ItemType, MealTag } from 'src/shared/enums/enum';

@@ -1,7 +1,7 @@
 import { OrderLog } from '../../order-log/models/order-log.model';
 import { CalculatedOrder } from '../../calculated-order/models/calculated-order.model';
 import { OrderType } from '../../order-type/models/order-type.model';
-import { BaseModel } from 'src/shared/base.model';
+import { BaseModel } from 'src/shared/models/base.model';
 import { Model, RelationMappings } from 'objection';
 import { User } from 'src/modules/user/models/user.model';
 

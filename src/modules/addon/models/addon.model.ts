@@ -1,6 +1,6 @@
 import { Model } from 'objection';
 import { Meal } from '../../meal/models/meal.model';
-import { BaseModel } from 'src/shared/base.model';
+import { BaseModel } from 'src/shared/models/base.model';
 import { AddonCategory } from 'src/modules/addon-category.model';
 
 export class Addon extends BaseModel {

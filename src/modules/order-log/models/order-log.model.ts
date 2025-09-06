@@ -1,6 +1,6 @@
 import { Model, RelationMappings } from 'objection';
 import { Order } from '../../order/models/order.model';
-import { BaseModel } from 'src/shared/base.model';
+import { BaseModel } from 'src/shared/models/base.model';
 
 export class OrderLog extends BaseModel {
   static tableName = 'order_logs';

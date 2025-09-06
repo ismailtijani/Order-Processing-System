@@ -1,7 +1,7 @@
 import { Model, RelationMappings } from 'objection';
 import { Order } from '../../order/models/order.model';
 import { CalculatedOrder } from '../../calculated-order/models/calculated-order.model';
-import { BaseModel } from 'src/shared/base.model';
+import { BaseModel } from 'src/shared/models/base.model';
 
 export class User extends BaseModel {
   static tableName = 'users';

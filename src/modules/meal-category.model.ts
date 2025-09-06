@@ -1,4 +1,4 @@
-import { BaseModel } from 'src/shared/base.model';
+import { BaseModel } from 'src/shared/models/base.model';
 
 export class MealCategory extends BaseModel {
   static tableName = 'meal_categories';

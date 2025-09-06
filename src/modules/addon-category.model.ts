@@ -1,5 +1,5 @@
 import { Model, RelationMappings } from 'objection';
-import { BaseModel } from 'src/shared/base.model';
+import { BaseModel } from 'src/shared/models/base.model';
 import { Brand } from './brand/models/brand.model';
 import { Addon } from './addon/models/addon.model';
 

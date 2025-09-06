@@ -1,6 +1,6 @@
 import { Model, RelationMappings } from 'objection';
 import { MealOrder } from './meal-order.model';
-import { BaseModel } from 'src/shared/base.model';
+import { BaseModel } from 'src/shared/models/base.model';
 import { Meal } from './meal/models/meal.model';
 
 export class MealOrderAddon extends BaseModel {

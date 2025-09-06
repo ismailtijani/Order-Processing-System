@@ -1,5 +1,5 @@
 import { Order } from '../../order/models/order.model';
-import { BaseModel } from 'src/shared/base.model';
+import { BaseModel } from 'src/shared/models/base.model';
 import { Model, RelationMappings } from 'objection';
 import { MealOrder } from 'src/modules/meal-order.model';
 import { User } from 'src/modules/user/models/user.model';

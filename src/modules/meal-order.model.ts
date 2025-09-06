@@ -1,4 +1,4 @@
-import { BaseModel } from 'src/shared/base.model';
+import { BaseModel } from 'src/shared/models/base.model';
 import { Meal } from './meal/models/meal.model';
 import { CalculatedOrder } from './calculated-order/models/calculated-order.model';
 import { Model, RelationMappings } from 'objection';
