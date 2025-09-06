@@ -8,7 +8,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { ItemType, MealTag } from 'src/shared/enum';
+import { ItemType, MealTag } from 'src/shared/enums/enum';
 
 export class CreateMealDto {
   @IsString()

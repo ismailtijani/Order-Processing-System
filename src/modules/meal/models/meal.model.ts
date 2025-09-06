@@ -3,7 +3,7 @@ import { Addon } from '../../addon/models/addon.model';
 import { BaseModel } from 'src/shared/base.model';
 import { Model, RelationMappings } from 'objection';
 import { MealOrder } from 'src/modules/meal-order.model';
-import { ItemType, MealTag } from 'src/shared/enum';
+import { ItemType, MealTag } from 'src/shared/enums/enum';
 import { MealCategory } from 'src/modules/meal-category.model';
 
 export class Meal extends BaseModel {

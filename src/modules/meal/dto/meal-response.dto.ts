@@ -1,6 +1,6 @@
 import { Expose, Type } from 'class-transformer';
 import { BrandResponseDto } from 'src/modules/brand/dto/brand-response.dto';
-import { ItemType, MealTag } from 'src/shared/enum';
+import { ItemType, MealTag } from 'src/shared/enums/enum';
 import { MealCategoryResponseDto } from './meal-category-response.dto';
 import { AddonResponseDto } from 'src/modules/addon/dto/addon-response.dto';
 
