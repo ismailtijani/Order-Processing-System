@@ -1,34 +1,72 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+  ParseUUIDPipe,
+  Put,
+  Query,
+  UseInterceptors,
+} from '@nestjs/common';
 import { BrandService } from './brand.service';
 import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandDto } from './dto/update-brand.dto';
+import {
+  LoggingInterceptor,
+  PaginationDto,
+  ResponseMessages,
+  Routes,
+  SuccessResponseDto,
+} from 'src/shared';
 
-@Controller('brand')
+@Controller('brands')
+@UseInterceptors(LoggingInterceptor)
 export class BrandController {
   constructor(private readonly brandService: BrandService) {}
 
-  @Post()
-  create(@Body() createBrandDto: CreateBrandDto) {
-    return this.brandService.create(createBrandDto);
+  @Post(Routes.CREATE_BRAND)
+  @HttpCode(HttpStatus.CREATED)
+  async createBrand(@Body() createBrandDto: CreateBrandDto) {
+    const brand = await this.brandService.createBrand(createBrandDto);
+    return new SuccessResponseDto(ResponseMessages.BRAND_CREATED, brand);
   }
 
-  @Get()
-  findAll() {
-    return this.brandService.findAll();
+  @Get(Routes.GET_BRANDS)
+  @HttpCode(HttpStatus.OK)
+  async getAllBrands(@Query() paginationDto: PaginationDto) {
+    const result = await this.brandService.findAll(paginationDto, ['meals']);
+    return new SuccessResponseDto(
+      ResponseMessages.BRANDS_RETRIEVED,
+      result.data,
+      result.meta,
+    );
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.brandService.findOne(+id);
+  @Get(Routes.GET_ONE_BRAND)
+  @HttpCode(HttpStatus.OK)
+  async getBrandById(@Param('brandId', ParseUUIDPipe) id: string) {
+    const brand = await this.brandService.findById(id, ['meals']);
+    return new SuccessResponseDto(ResponseMessages.BRAND_RETRIEVED, brand);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBrandDto: UpdateBrandDto) {
-    return this.brandService.update(+id, updateBrandDto);
+  @Put(Routes.UPDATE_BRAND)
+  @HttpCode(HttpStatus.OK)
+  async updateBrand(
+    @Param('brandId', ParseUUIDPipe) id: string,
+    @Body() updateBrandDto: UpdateBrandDto,
+  ) {
+    const brand = await this.brandService.updateBrand(id, updateBrandDto);
+    return new SuccessResponseDto(ResponseMessages.BRAND_UPDATED, brand);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.brandService.remove(+id);
+  @Delete(Routes.DELETE_BRAND)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async deleteBrand(@Param('brandId', ParseUUIDPipe) id: string) {
+    await this.brandService.delete(id);
+    return new SuccessResponseDto(ResponseMessages.BRAND_DELETED, null);
   }
 }

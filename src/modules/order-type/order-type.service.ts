@@ -1,26 +1,59 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateOrderTypeDto } from './dto/create-order-type.dto';
 import { UpdateOrderTypeDto } from './dto/update-order-type.dto';
+import { ErrorMessages } from 'src/shared';
+import { BaseService } from 'src/shared/services/base.service';
+import { OrderType } from './models/order-type.model';
 
 @Injectable()
-export class OrderTypeService {
-  create(createOrderTypeDto: CreateOrderTypeDto) {
-    return 'This action adds a new orderType';
+export class OrderTypeService extends BaseService<OrderType> {
+  constructor() {
+    super(OrderType);
   }
 
-  findAll() {
-    return `This action returns all orderType`;
+  async create(createOrderTypeDto: CreateOrderTypeDto): Promise<OrderType> {
+    const existingOrderType = await this.existsByField(
+      'name',
+      createOrderTypeDto.name,
+    );
+    if (existingOrderType) {
+      throw new BadRequestException(ErrorMessages.ORDER_TYPE_ALREADY_EXISTS);
+    }
+
+    return super.create(createOrderTypeDto);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} orderType`;
+  async update(
+    id: string,
+    updateOrderTypeDto: UpdateOrderTypeDto,
+  ): Promise<OrderType> {
+    if (updateOrderTypeDto.name) {
+      const existingOrderType = await this.existsByField(
+        'name',
+        updateOrderTypeDto.name,
+        id,
+      );
+      if (existingOrderType) {
+        throw new BadRequestException(ErrorMessages.ORDER_TYPE_ALREADY_EXISTS);
+      }
+    }
+
+    return super.update(id, updateOrderTypeDto);
   }
 
-  update(id: number, updateOrderTypeDto: UpdateOrderTypeDto) {
-    return `This action updates a #${id} orderType`;
+  protected getCreateErrorMessage(): string {
+    return ErrorMessages.ORDER_TYPE_CREATION_FAILED;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} orderType`;
+  protected getUpdateErrorMessage(): string {
+    return ErrorMessages.ORDER_TYPE_UPDATE_FAILED;
+  }
+
+  protected getDeleteErrorMessage(): string {
+    return ErrorMessages.ORDER_TYPE_DELETION_FAILED;
+  }
+
+  protected getNotFoundErrorMessage(): string {
+    return ErrorMessages.ORDER_TYPE_NOT_FOUND;
   }
 }

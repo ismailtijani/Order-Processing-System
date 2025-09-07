@@ -3,6 +3,8 @@ import { SetMetadata } from '@nestjs/common';
 export const Characters =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
+export const SALT_ROUNDS = 6;
+export const OTP_EXPIRY_MINUTES = 10;
 export const SENSITIVE_FIELDS = ['password', 'token', 'authorization'] as const;
 
 export const PAGINATION_CONSTANTS = {

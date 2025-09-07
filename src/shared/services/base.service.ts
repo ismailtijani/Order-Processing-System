@@ -3,7 +3,7 @@ import {
   NotFoundException,
   BadRequestException,
 } from '@nestjs/common';
-import { ModelClass, QueryBuilder, QueryBuilderType } from 'objection';
+import { ModelClass, QueryBuilderType } from 'objection';
 import { PaginationDto } from '../dto/pagination.dto';
 import { BaseModel } from '../models/base.model';
 import { PaginatedResult, PaginationMeta } from '../interfaces/interface';

@@ -40,6 +40,7 @@ export enum ErrorMessages {
   ADDON_CREATION_FAILED = 'Failed to create addon',
   ADDON_UPDATE_FAILED = 'Failed to update addon',
   ADDON_DELETION_FAILED = 'Failed to delete addon',
+  ADDON_CATEGORY_NOT_FOUND = 'Addon category not found',
 
   // Order Error Messages
   ORDER_NOT_FOUND = 'Order not found',

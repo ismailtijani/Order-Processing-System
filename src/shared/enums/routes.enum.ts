@@ -1,29 +1,29 @@
 export enum Routes {
   // User Routes
-  CREATE_USER_ROUTE = '',
-  GET_USERS_ROUTE = '',
+  CREATE_USER = '',
+  GET_USERS = '',
   UPDATE_USER = ':userId',
   DELETE_USER = ':userId',
   GET_ONE_USER = ':userId',
 
   // Brand Routes
-  CREATE_BRAND_ROUTE = '',
-  GET_BRANDS_ROUTE = '',
+  CREATE_BRAND = '',
+  GET_BRANDS = '',
   UPDATE_BRAND = ':brandId',
   DELETE_BRAND = ':brandId',
   GET_ONE_BRAND = ':brandId',
 
   // Meal Routes
-  CREATE_MEAL_ROUTE = '',
-  GET_MEALS_ROUTE = '',
+  CREATE_MEAL = '',
+  GET_MEALS = '',
   UPDATE_MEAL = ':mealId',
   DELETE_MEAL = ':mealId',
   GET_ONE_MEAL = ':mealId',
   GET_MEALS_BY_BRAND = 'brand/:brandId',
 
   // Addon Routes
-  CREATE_ADDON_ROUTE = '',
-  GET_ADDONS_ROUTE = '',
+  CREATE_ADDON = '',
+  GET_ADDONS = '',
   UPDATE_ADDON = ':addonId',
   DELETE_ADDON = ':addonId',
   GET_ONE_ADDON = ':addonId',

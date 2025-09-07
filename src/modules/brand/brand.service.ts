@@ -1,26 +1,56 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandDto } from './dto/update-brand.dto';
+import { BaseService } from 'src/shared/services/base.service';
+import { Brand } from './models/brand.model';
+import { ErrorMessages } from 'src/shared';
 
 @Injectable()
-export class BrandService {
-  create(createBrandDto: CreateBrandDto) {
-    return 'This action adds a new brand';
+export class BrandService extends BaseService<Brand> {
+  constructor() {
+    super(Brand);
   }
 
-  findAll() {
-    return `This action returns all brand`;
+  async createBrand(createBrandDto: CreateBrandDto): Promise<Brand> {
+    const existingBrand = await this.existsByField('name', createBrandDto.name);
+    if (existingBrand) {
+      throw new BadRequestException(ErrorMessages.BRAND_ALREADY_EXISTS);
+    }
+
+    return super.create(createBrandDto);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} brand`;
+  async updateBrand(
+    id: string,
+    updateBrandDto: UpdateBrandDto,
+  ): Promise<Brand> {
+    if (updateBrandDto.name) {
+      const existingBrand = await this.existsByField(
+        'name',
+        updateBrandDto.name,
+        id,
+      );
+      if (existingBrand) {
+        throw new BadRequestException(ErrorMessages.BRAND_ALREADY_EXISTS);
+      }
+    }
+
+    return super.update(id, updateBrandDto);
   }
 
-  update(id: number, updateBrandDto: UpdateBrandDto) {
-    return `This action updates a #${id} brand`;
+  protected getCreateErrorMessage(): string {
+    return ErrorMessages.BRAND_CREATION_FAILED;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} brand`;
+  protected getUpdateErrorMessage(): string {
+    return ErrorMessages.BRAND_UPDATE_FAILED;
+  }
+
+  protected getDeleteErrorMessage(): string {
+    return ErrorMessages.BRAND_DELETION_FAILED;
+  }
+
+  protected getNotFoundErrorMessage(): string {
+    return ErrorMessages.BRAND_NOT_FOUND;
   }
 }

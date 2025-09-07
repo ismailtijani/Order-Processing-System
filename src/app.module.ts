@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { ConfigModule } from '@nestjs/config';
-import { OrderModule } from './modules/order/order.module';
+// import { OrderModule } from './modules/order/order.module';
 import { OrderLogModule } from './modules/order-log/order-log.module';
 import { MealModule } from './modules/meal/meal.module';
 import { CalculatedOrderModule } from './modules/calculated-order/calculated-order.module';
@@ -21,7 +21,7 @@ import knexConfig from './database/knexfile';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    OrderModule,
+    // OrderModule,
     OrderLogModule,
     MealModule,
     CalculatedOrderModule,

@@ -1,34 +1,53 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Delete,
+  UseInterceptors,
+  HttpStatus,
+  HttpCode,
+  Query,
+  ParseUUIDPipe,
+} from '@nestjs/common';
 import { OrderLogService } from './order-log.service';
-import { CreateOrderLogDto } from './dto/create-order-log.dto';
-import { UpdateOrderLogDto } from './dto/update-order-log.dto';
+import {
+  LoggingInterceptor,
+  PaginationDto,
+  ResponseMessages,
+  Routes,
+  SuccessResponseDto,
+} from 'src/shared';
 
-@Controller('order-log')
+@Controller('order-logs')
+@UseInterceptors(LoggingInterceptor)
 export class OrderLogController {
   constructor(private readonly orderLogService: OrderLogService) {}
 
-  @Post()
-  create(@Body() createOrderLogDto: CreateOrderLogDto) {
-    return this.orderLogService.create(createOrderLogDto);
+  @Get(Routes.GET_ORDER_LOGS_ROUTE)
+  @HttpCode(HttpStatus.OK)
+  async getOrderLogs(@Query() paginationDto: PaginationDto) {
+    const result = await this.orderLogService.findAll(paginationDto, ['order']);
+    return new SuccessResponseDto(
+      ResponseMessages.ORDER_LOGS_RETRIEVED,
+      result.data,
+      result.meta,
+    );
   }
 
-  @Get()
-  findAll() {
-    return this.orderLogService.findAll();
+  @Get(Routes.GET_ONE_ORDER_LOG)
+  @HttpCode(HttpStatus.OK)
+  async getOrderLogById(@Param('orderLogId', ParseUUIDPipe) id: string) {
+    const orderLog = await this.orderLogService.findById(id, ['order']);
+    return new SuccessResponseDto(
+      ResponseMessages.ORDER_LOG_RETRIEVED,
+      orderLog,
+    );
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.orderLogService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderLogDto: UpdateOrderLogDto) {
-    return this.orderLogService.update(+id, updateOrderLogDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.orderLogService.remove(+id);
+  @Delete(Routes.DELETE_ORDER_LOG)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async deleteOrderLog(@Param('orderLogId', ParseUUIDPipe) id: string) {
+    await this.orderLogService.delete(id);
+    return new SuccessResponseDto(ResponseMessages.ORDER_LOG_DELETED, null);
   }
 }
