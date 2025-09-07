@@ -1,98 +1,221 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# NestJS Order Processing System
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 🚀 Features
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- **Comprehensive Order Management**: Full order lifecycle from creation to completion
+- **Advanced Business Logic**: Kitchen workflow, order processing, and status management
+- **Scalable Architecture**: SOLID principles, DRY code, repository pattern
+- **Database Optimization**: Efficient queries, proper indexing, transaction management
+- **Error Handling**: Graceful error handling with proper HTTP status codes
+- **Logging & Monitoring**: Request logging, error tracking, and performance monitoring
+- **Data Validation**: Class-validator, DTOs, and sanitization
+- **Pagination**: Efficient data retrieval with metadata
 
-## Description
+## 🛠 Tech Stack
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **Framework**: NestJS
+- **Database**: PostgreSQL
+- **ORM**: Objection.js with Knex.js
+- **Validation**: class-validator, class-transformer
+- **Language**: TypeScript
 
-## Project setup
+## 📋 Prerequisites
 
-```bash
-$ npm install
-```
+- Node.js (v16 or higher)
+- PostgreSQL (v12 or higher)
+- npm
 
-## Compile and run the project
+## 🔧 Installation
+
+1. **Clone the repository**
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+git clone <repository-url>
+cd order-processing-system
 ```
 
-## Run tests
+2. **Install dependencies**
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm install
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+3. **Environment Configuration**
 
 ```bash
-$ npm install -g mau
-$ mau deploy
+cp .env.example .env
+# Edit .env with your database credentials
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+4. **Database Setup**
 
-## Resources
+```bash
+# Create database
+createdb order_system
 
-Check out a few resources that may come in handy when working with NestJS:
+# Run migrations
+npm run migration:run
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+# Seed database with sample data
+npm run seed:run
+```
 
-## Support
+5. **Start the application**
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+# Development
+npm run start:dev
 
-## Stay in touch
+# Production
+npm run build
+npm run start:prod
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## 📚 API Endpoints
 
-## License
+### Orders
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- `POST /api/v1/orders` - Create order
+- `GET /api/v1/orders` - Get all orders (paginated)
+- `GET /api/v1/orders/:orderId` - Get order by ID
+- `PUT /api/v1/orders/:orderId` - Update order
+- `DELETE /api/v1/orders/:orderId` - Delete order
+- `POST /api/v1/orders/:orderId/process` - Process order through kitchen workflow
+- `PUT /api/v1/orders/:orderId/cancel` - Cancel order
+- `GET /api/v1/orders/user/:userId` - Get user orders
+
+### Meals
+
+- `POST /api/v1/meals` - Create meal
+- `GET /api/v1/meals` - Get all meals (paginated)
+- `GET /api/v1/meals/:mealId` - Get meal by ID
+- `PUT /api/v1/meals/:mealId` - Update meal
+- `DELETE /api/v1/meals/:mealId` - Delete meal
+- `GET /api/v1/meals/brand/:brandId` - Get meals by brand
+
+### Brands
+
+- `POST /api/v1/brands` - Create brand
+- `GET /api/v1/brands` - Get all brands
+- `GET /api/v1/brands/:brandId` - Get brand by ID
+- `PUT /api/v1/brands/:brandId` - Update brand
+- `DELETE /api/v1/brands/:brandId` - Delete brand
+
+## 🏗 Architecture
+
+### Design Patterns
+
+- **Repository Pattern**: BaseService for common CRUD operations
+- **Factory Pattern**: Order code generation
+- **Observer Pattern**: Order status logging
+- **Dependency Injection**: NestJS IoC container
+
+### Key Components
+
+#### BaseService
+
+Generic service class providing:
+
+- CRUD operations with validation
+- Pagination support
+- Relation loading
+- Error handling
+- Soft delete support
+
+#### Order Processing Logic
+
+1. **Order Creation**: Validates meals, calculates totals, creates relations
+2. **Kitchen Workflow**: Acceptance → Preparation → Dispatch → Completion
+3. **Status Tracking**: Comprehensive logging of state changes
+4. **Transaction Management**: Ensures data consistency
+
+#### Error Handling
+
+- Global exception filter
+- Database error mapping
+- Validation error formatting
+- Request/response logging
+
+## 🔍 Key Features Explained
+
+### Order Processing (`processOrder`)
+
+```typescript
+// Comprehensive order processing with:
+// 1. Status validation
+// 2. Kitchen workflow automation
+// 3. Automatic logging
+// 4. Total recalculation
+// 5. Transaction safety
+```
+
+### Optimized Queries
+
+- **Eager Loading**: Related data fetched efficiently
+- **Indexed Columns**: Performance optimization
+- **Query Builder**: Complex filtering support
+- **Pagination**: Memory-efficient data retrieval
+
+### Scalability Features
+
+- **Connection Pooling**: Database connection management
+- **Caching Ready**: Structured for Redis integration
+- **Microservice Ready**: Modular architecture
+- **Event-Driven**: Easy integration with message queues
+
+## 🧪 Testing
+
+```bash
+# Unit tests
+npm run test
+
+# Integration tests
+npm run test:e2e
+
+# Coverage report
+npm run test:cov
+```
+
+## 📊 Database Schema
+
+The system includes comprehensive relationships:
+
+- Users ← Orders → Calculated Orders
+- Orders ← Order Logs (audit trail)
+- Meals ← Addons → Addon Categories
+- Brands → Meals → Categories
+
+## 🚦 Development Guidelines
+
+### Code Style
+
+- TypeScript strict mode
+- ESLint + Prettier formatting
+- Descriptive variable names
+- Comprehensive error messages
+
+### Performance Considerations
+
+- Lazy loading for large datasets
+- Optimized N+1 query prevention
+- Transaction boundaries
+- Connection pooling
+
+### Security Features
+
+- Input validation and sanitization
+- SQL injection prevention (parameterized queries)
+- Password hashing (bcrypt)
+- CORS configuration
+
+## 📈 Monitoring & Logging
+
+- Request/Response logging
+- Performance metrics
+- Error tracking
+- Database query logging
+- Health check endpoints
+
+## 📄 License
+
+This project is licensed under the MIT License.
