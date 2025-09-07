@@ -1,6 +1,6 @@
 import { OrderLog } from 'src/modules/order-log/models/order-log.model';
 import { Order } from 'src/modules/order/models/order.model';
-import { OrderStatus } from '../enums/enum';
+import { OrderStatus, UserType } from '../enums/enum';
 
 export interface PaginationMeta {
   page: number;
@@ -21,4 +21,17 @@ export interface ProcessOrderResult {
   calculatedTotal: number;
   logs: OrderLog[];
   status: OrderStatus;
+}
+
+export interface CurrentUser {
+  sub: number;
+  userType: string;
+  email: string;
+  brandId: number;
+}
+
+export class JwtPayload {
+  sub: number;
+  userType: UserType;
+  userId?: number;
 }

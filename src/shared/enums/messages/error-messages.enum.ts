@@ -8,6 +8,8 @@ export enum ErrorMessages {
   INTERNAL_SERVER_ERROR = 'Internal server error',
   DATABASE_ERROR = 'Database error occurred',
   RESOURCE_NOT_FOUND = 'Resource not found',
+  TOKEN_ERROR = 'Invalid or Expired Token',
+  INVALID_AUTH_TOKEN_ERROR = 'Invalid Authorization token',
 
   // User Error Messages
   USER_NOT_FOUND = 'User not found',

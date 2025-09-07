@@ -18,10 +18,10 @@ export class UserResponseDto {
   phone_number: string;
 
   @Expose()
-  address_details: AddressResponse;
+  is_active: boolean;
 
   @Expose()
-  is_active: boolean;
+  address_details: AddressResponse;
 
   @Expose()
   created_at: Date;

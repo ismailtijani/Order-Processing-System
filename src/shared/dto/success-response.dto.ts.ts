@@ -1,4 +1,4 @@
-export class SuccessResponseDto<T = any> {
+export class SuccessResponse<T = any> {
   success: boolean;
   message: string;
   data: T;

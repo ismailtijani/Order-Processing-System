@@ -20,7 +20,7 @@ import {
   PaginationDto,
   ResponseMessages,
   Routes,
-  SuccessResponseDto,
+  SuccessResponse,
 } from 'src/shared';
 
 @Controller('addons')
@@ -32,7 +32,7 @@ export class AddonController {
   @HttpCode(HttpStatus.CREATED)
   async createAddon(@Body() createAddonDto: CreateAddonDto) {
     const addon = await this.addonService.createAddon(createAddonDto);
-    return new SuccessResponseDto(ResponseMessages.ADDON_CREATED, addon);
+    return new SuccessResponse(ResponseMessages.ADDON_CREATED, addon);
   }
 
   @Get(Routes.GET_ADDONS)
@@ -43,7 +43,7 @@ export class AddonController {
       'addonMeal',
       'category',
     ]);
-    return new SuccessResponseDto(
+    return new SuccessResponse(
       ResponseMessages.ADDONS_RETRIEVED,
       result.data,
       result.meta,
@@ -58,7 +58,7 @@ export class AddonController {
       'addonMeal',
       'category',
     ]);
-    return new SuccessResponseDto(ResponseMessages.ADDON_RETRIEVED, addon);
+    return new SuccessResponse(ResponseMessages.ADDON_RETRIEVED, addon);
   }
 
   @Put(Routes.UPDATE_ADDON)
@@ -68,14 +68,14 @@ export class AddonController {
     @Body() updateAddonDto: UpdateAddonDto,
   ) {
     const addon = await this.addonService.update(id, updateAddonDto);
-    return new SuccessResponseDto(ResponseMessages.ADDON_UPDATED, addon);
+    return new SuccessResponse(ResponseMessages.ADDON_UPDATED, addon);
   }
 
   @Delete(Routes.DELETE_ADDON)
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteAddon(@Param('addonId', ParseUUIDPipe) id: string) {
     await this.addonService.delete(id);
-    return new SuccessResponseDto(ResponseMessages.ADDON_DELETED, null);
+    return new SuccessResponse(ResponseMessages.ADDON_DELETED, null);
   }
 
   @Get(Routes.GET_ADDONS_BY_MEAL)
@@ -90,7 +90,7 @@ export class AddonController {
       paginationDto,
       ['addonMeal', 'category'],
     );
-    return new SuccessResponseDto(
+    return new SuccessResponse(
       ResponseMessages.ADDONS_RETRIEVED,
       result.data,
       result.meta,

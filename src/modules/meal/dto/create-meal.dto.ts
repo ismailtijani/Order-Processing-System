@@ -21,25 +21,29 @@ export class CreateMealDto {
 
   @Type(() => Number)
   @IsNumber()
-  @IsOptional()
   amount: number;
 
   @IsString()
   @IsOptional()
   description: string;
 
+  @IsOptional()
   @IsBoolean()
   active: boolean;
 
+  @IsOptional()
   @IsBoolean()
   new: boolean;
 
+  @IsOptional()
   @IsBoolean()
   alcohol: boolean;
 
+  @IsOptional()
   @IsBoolean()
   is_addon: boolean;
 
+  @IsOptional()
   @IsBoolean()
   is_combo: boolean;
 
@@ -47,6 +51,7 @@ export class CreateMealDto {
   @IsOptional()
   position: number;
 
+  @IsOptional()
   @IsBoolean()
   home_page: boolean;
 

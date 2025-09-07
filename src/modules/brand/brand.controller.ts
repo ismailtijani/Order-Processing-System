@@ -20,10 +20,13 @@ import {
   PaginationDto,
   ResponseMessages,
   Routes,
-  SuccessResponseDto,
+  SuccessResponse,
 } from 'src/shared';
+import { Serialize } from 'src/shared/interceptors/response-serializer';
+import { BrandResponseDto } from './dto/brand-response.dto';
 
 @Controller('brands')
+@Serialize(BrandResponseDto)
 @UseInterceptors(LoggingInterceptor)
 export class BrandController {
   constructor(private readonly brandService: BrandService) {}
@@ -32,14 +35,14 @@ export class BrandController {
   @HttpCode(HttpStatus.CREATED)
   async createBrand(@Body() createBrandDto: CreateBrandDto) {
     const brand = await this.brandService.createBrand(createBrandDto);
-    return new SuccessResponseDto(ResponseMessages.BRAND_CREATED, brand);
+    return new SuccessResponse(ResponseMessages.BRAND_CREATED, brand);
   }
 
   @Get(Routes.GET_BRANDS)
   @HttpCode(HttpStatus.OK)
   async getAllBrands(@Query() paginationDto: PaginationDto) {
     const result = await this.brandService.findAll(paginationDto, ['meals']);
-    return new SuccessResponseDto(
+    return new SuccessResponse(
       ResponseMessages.BRANDS_RETRIEVED,
       result.data,
       result.meta,
@@ -50,7 +53,7 @@ export class BrandController {
   @HttpCode(HttpStatus.OK)
   async getBrandById(@Param('brandId', ParseUUIDPipe) id: string) {
     const brand = await this.brandService.findById(id, ['meals']);
-    return new SuccessResponseDto(ResponseMessages.BRAND_RETRIEVED, brand);
+    return new SuccessResponse(ResponseMessages.BRAND_RETRIEVED, brand);
   }
 
   @Put(Routes.UPDATE_BRAND)
@@ -60,13 +63,13 @@ export class BrandController {
     @Body() updateBrandDto: UpdateBrandDto,
   ) {
     const brand = await this.brandService.updateBrand(id, updateBrandDto);
-    return new SuccessResponseDto(ResponseMessages.BRAND_UPDATED, brand);
+    return new SuccessResponse(ResponseMessages.BRAND_UPDATED, brand);
   }
 
   @Delete(Routes.DELETE_BRAND)
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteBrand(@Param('brandId', ParseUUIDPipe) id: string) {
     await this.brandService.delete(id);
-    return new SuccessResponseDto(ResponseMessages.BRAND_DELETED, null);
+    return new SuccessResponse(ResponseMessages.BRAND_DELETED, null);
   }
 }

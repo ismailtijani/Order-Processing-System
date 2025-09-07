@@ -20,10 +20,13 @@ import {
   PaginationDto,
   ResponseMessages,
   Routes,
-  SuccessResponseDto,
+  SuccessResponse,
 } from 'src/shared';
+import { Serialize } from 'src/shared/interceptors/response-serializer';
+import { UserResponseDto } from './dto/user-response.dto';
 
 @Controller('users')
+@Serialize(UserResponseDto)
 @UseInterceptors(LoggingInterceptor)
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -32,14 +35,14 @@ export class UserController {
   @HttpCode(HttpStatus.CREATED)
   async createUser(@Body() createUserDto: CreateUserDto) {
     const user = await this.userService.createUser(createUserDto);
-    return new SuccessResponseDto(ResponseMessages.USER_CREATED, user);
+    return new SuccessResponse(ResponseMessages.USER_CREATED, user);
   }
 
   @Get(Routes.GET_USERS)
   @HttpCode(HttpStatus.OK)
   async getAllUsers(@Query() paginationDto: PaginationDto) {
     const result = await this.userService.findAll(paginationDto);
-    return new SuccessResponseDto(
+    return new SuccessResponse(
       ResponseMessages.USERS_RETRIEVED,
       result.data,
       result.meta,
@@ -50,7 +53,7 @@ export class UserController {
   @HttpCode(HttpStatus.OK)
   async getUserById(@Param('userId', ParseUUIDPipe) id: string) {
     const user = await this.userService.findById(id);
-    return new SuccessResponseDto(ResponseMessages.USER_RETRIEVED, user);
+    return new SuccessResponse(ResponseMessages.USER_RETRIEVED, user);
   }
 
   @Put(Routes.UPDATE_USER)
@@ -60,13 +63,13 @@ export class UserController {
     @Body() updateUserDto: UpdateUserDto,
   ) {
     const user = await this.userService.updateUser(id, updateUserDto);
-    return new SuccessResponseDto(ResponseMessages.USER_UPDATED, user);
+    return new SuccessResponse(ResponseMessages.USER_UPDATED, user);
   }
 
   @Delete(Routes.DELETE_USER)
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteUser(@Param('userId', ParseUUIDPipe) id: string) {
     await this.userService.delete(id);
-    return new SuccessResponseDto(ResponseMessages.USER_DELETED, null);
+    return new SuccessResponse(ResponseMessages.USER_DELETED, null);
   }
 }

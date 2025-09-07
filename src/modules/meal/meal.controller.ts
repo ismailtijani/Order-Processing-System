@@ -20,7 +20,7 @@ import {
   PaginationDto,
   ResponseMessages,
   Routes,
-  SuccessResponseDto,
+  SuccessResponse,
 } from 'src/shared';
 
 @Controller('meals')
@@ -32,7 +32,7 @@ export class MealController {
   @HttpCode(HttpStatus.CREATED)
   async createMeal(@Body() createMealDto: CreateMealDto) {
     const meal = await this.mealService.createMeal(createMealDto);
-    return new SuccessResponseDto(ResponseMessages.MEAL_CREATED, meal);
+    return new SuccessResponse(ResponseMessages.MEAL_CREATED, meal);
   }
 
   @Get(Routes.GET_MEALS)
@@ -46,7 +46,7 @@ export class MealController {
       ['brand', 'category', 'addons'],
       filters, // I will create MealQueryDto to handle filters properly
     );
-    return new SuccessResponseDto(
+    return new SuccessResponse(
       ResponseMessages.MEALS_RETRIEVED,
       result.data,
       result.meta,
@@ -61,7 +61,7 @@ export class MealController {
       'category',
       'addons.addonMeal',
     ]);
-    return new SuccessResponseDto(ResponseMessages.MEAL_RETRIEVED, meal);
+    return new SuccessResponse(ResponseMessages.MEAL_RETRIEVED, meal);
   }
 
   @Put(Routes.UPDATE_MEAL)
@@ -71,14 +71,14 @@ export class MealController {
     @Body() updateMealDto: UpdateMealDto,
   ) {
     const meal = await this.mealService.updateMeal(id, updateMealDto);
-    return new SuccessResponseDto(ResponseMessages.MEAL_UPDATED, meal);
+    return new SuccessResponse(ResponseMessages.MEAL_UPDATED, meal);
   }
 
   @Delete(Routes.DELETE_MEAL)
   @HttpCode(HttpStatus.OK)
   async deleteMeal(@Param('mealId', ParseUUIDPipe) id: string) {
     await this.mealService.delete(id);
-    return new SuccessResponseDto(ResponseMessages.MEAL_DELETED, null);
+    return new SuccessResponse(ResponseMessages.MEAL_DELETED, null);
   }
 
   @Get(Routes.GET_MEALS_BY_BRAND)
@@ -93,7 +93,7 @@ export class MealController {
       paginationDto,
       ['brand', 'addons'],
     );
-    return new SuccessResponseDto(
+    return new SuccessResponse(
       ResponseMessages.MEALS_RETRIEVED,
       result.data,
       result.meta,

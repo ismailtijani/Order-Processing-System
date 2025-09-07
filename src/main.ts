@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import {
   DocumentBuilder,
   SwaggerDocumentOptions,
@@ -10,11 +10,23 @@ import { ConfigService } from '@nestjs/config';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
+  const logger = new Logger('Bootstrap');
   const PORT = configService.getOrThrow<number>('PORT');
 
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+    }),
+  );
   // app.useGlobalFilters(new HttpExceptionFilter());
-  app.enableCors();
+
+  // Enable CORS
+  app.enableCors({
+    origin: configService.get<string>('CORS_ORIGIN', '*'),
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  });
 
   const config = new DocumentBuilder()
     .setTitle('Sboard Manager')
@@ -30,7 +42,8 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   await app.listen(PORT);
-  console.log(`Server is running 🚀🚀🚀 on: ${await app.getUrl()}`);
+  logger.log(`🚀 Application is running on: http://localhost:${PORT}/api/v1`);
+  // console.log(`Server is running 🚀🚀🚀 on: ${await app.getUrl()}`);
 }
 
 bootstrap().catch((error) => {

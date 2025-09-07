@@ -8,3 +8,4 @@ export * from './enums/messages/error-messages.enum';
 export * from './interceptors/logging.interceptor';
 export * from './interfaces/interface';
 export * from './middleware/request-logging.middleware';
+export * from './filters/http-exception.filter';

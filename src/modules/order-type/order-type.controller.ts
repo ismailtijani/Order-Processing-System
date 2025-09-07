@@ -20,7 +20,7 @@ import {
   PaginationDto,
   ResponseMessages,
   Routes,
-  SuccessResponseDto,
+  SuccessResponse,
 } from 'src/shared';
 
 @Controller('order-types')
@@ -32,10 +32,7 @@ export class OrderTypeController {
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() createOrderTypeDto: CreateOrderTypeDto) {
     const orderType = await this.orderTypeService.create(createOrderTypeDto);
-    return new SuccessResponseDto(
-      ResponseMessages.ORDER_TYPE_CREATED,
-      orderType,
-    );
+    return new SuccessResponse(ResponseMessages.ORDER_TYPE_CREATED, orderType);
   }
 
   @Get(Routes.GET_ORDER_TYPES_ROUTE)
@@ -44,7 +41,7 @@ export class OrderTypeController {
     const result = await this.orderTypeService.findAll(paginationDto, [
       'orders',
     ]);
-    return new SuccessResponseDto(
+    return new SuccessResponse(
       ResponseMessages.ORDER_TYPES_RETRIEVED,
       result.data,
       result.meta,
@@ -55,7 +52,7 @@ export class OrderTypeController {
   @HttpCode(HttpStatus.OK)
   async findOne(@Param('orderTypeId', ParseUUIDPipe) id: string) {
     const orderType = await this.orderTypeService.findById(id, ['orders']);
-    return new SuccessResponseDto(
+    return new SuccessResponse(
       ResponseMessages.ORDER_TYPE_RETRIEVED,
       orderType,
     );
@@ -71,16 +68,13 @@ export class OrderTypeController {
       id,
       updateOrderTypeDto,
     );
-    return new SuccessResponseDto(
-      ResponseMessages.ORDER_TYPE_UPDATED,
-      orderType,
-    );
+    return new SuccessResponse(ResponseMessages.ORDER_TYPE_UPDATED, orderType);
   }
 
   @Delete(Routes.DELETE_ORDER_TYPE)
   @HttpCode(HttpStatus.OK)
   async remove(@Param('orderTypeId', ParseUUIDPipe) id: string) {
     await this.orderTypeService.delete(id);
-    return new SuccessResponseDto(ResponseMessages.ORDER_TYPE_DELETED, null);
+    return new SuccessResponse(ResponseMessages.ORDER_TYPE_DELETED, null);
   }
 }

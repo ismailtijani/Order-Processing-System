@@ -7,6 +7,7 @@ import { ModelClass, QueryBuilderType } from 'objection';
 import { PaginationDto } from '../dto/pagination.dto';
 import { BaseModel } from '../models/base.model';
 import { PaginatedResult, PaginationMeta } from '../interfaces/interface';
+import e from 'express';
 
 @Injectable()
 export abstract class BaseService<T extends BaseModel> {
@@ -20,8 +21,10 @@ export abstract class BaseService<T extends BaseModel> {
    */
   async create(data: Partial<T>): Promise<T> {
     try {
+      console.debug(data);
       return (await this.model.query().insert(data)) as T;
     } catch (error) {
+      console.debug(error);
       throw new BadRequestException(this.getCreateErrorMessage());
     }
   }
@@ -62,7 +65,7 @@ export abstract class BaseService<T extends BaseModel> {
     relations?: string[],
     filters?: Record<string, any>,
   ): Promise<PaginatedResult<T>> {
-    const { page, limit } = paginationDto;
+    const { page = 1, limit = 10 } = paginationDto;
     const offset = (page - 1) * limit;
 
     let query = this.model.query();

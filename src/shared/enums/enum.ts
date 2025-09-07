@@ -57,3 +57,10 @@ export enum OrderStatus {
   CANCELLED = 'CANCELLED',
   FAILED = 'FAILED',
 }
+
+export enum UserType {
+  ADMIN = 'ADMIN',
+  RIDER = 'RIDER',
+  BRAND = 'BRAND',
+  USER = 'USER',
+}

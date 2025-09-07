@@ -15,7 +15,7 @@ import {
   PaginationDto,
   ResponseMessages,
   Routes,
-  SuccessResponseDto,
+  SuccessResponse,
 } from 'src/shared';
 
 @Controller('order-logs')
@@ -27,7 +27,7 @@ export class OrderLogController {
   @HttpCode(HttpStatus.OK)
   async getOrderLogs(@Query() paginationDto: PaginationDto) {
     const result = await this.orderLogService.findAll(paginationDto, ['order']);
-    return new SuccessResponseDto(
+    return new SuccessResponse(
       ResponseMessages.ORDER_LOGS_RETRIEVED,
       result.data,
       result.meta,
@@ -38,16 +38,13 @@ export class OrderLogController {
   @HttpCode(HttpStatus.OK)
   async getOrderLogById(@Param('orderLogId', ParseUUIDPipe) id: string) {
     const orderLog = await this.orderLogService.findById(id, ['order']);
-    return new SuccessResponseDto(
-      ResponseMessages.ORDER_LOG_RETRIEVED,
-      orderLog,
-    );
+    return new SuccessResponse(ResponseMessages.ORDER_LOG_RETRIEVED, orderLog);
   }
 
   @Delete(Routes.DELETE_ORDER_LOG)
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteOrderLog(@Param('orderLogId', ParseUUIDPipe) id: string) {
     await this.orderLogService.delete(id);
-    return new SuccessResponseDto(ResponseMessages.ORDER_LOG_DELETED, null);
+    return new SuccessResponse(ResponseMessages.ORDER_LOG_DELETED, null);
   }
 }

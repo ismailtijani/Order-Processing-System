@@ -1,7 +1,9 @@
 import {
   InternalServerErrorException,
   Logger,
+  MiddlewareConsumer,
   Module,
+  NestModule,
   OnApplicationBootstrap,
 } from '@nestjs/common';
 import { AppController } from './app.controller';
@@ -17,6 +19,12 @@ import { Model } from 'objection';
 import knex, { Knex } from 'knex';
 import { UserModule } from './modules/user/user.module';
 import knexConfig from './database/knexfile';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import {
+  HttpExceptionFilter,
+  LoggingInterceptor,
+  RequestLoggingMiddleware,
+} from './shared';
 
 @Module({
   imports: [
@@ -31,9 +39,18 @@ import knexConfig from './database/knexfile';
     UserModule,
   ],
   controllers: [AppController],
-  providers: [],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
+    },
+  ],
 })
-export class AppModule implements OnApplicationBootstrap {
+export class AppModule implements OnApplicationBootstrap, NestModule {
   private knexConnection: Knex;
   private readonly logger = new Logger(AppModule.name);
 
@@ -44,6 +61,10 @@ export class AppModule implements OnApplicationBootstrap {
 
   async onApplicationBootstrap() {
     await this.testConnection();
+  }
+
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(RequestLoggingMiddleware).forRoutes('*');
   }
 
   private async testConnection() {
